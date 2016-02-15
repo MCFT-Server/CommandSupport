@@ -1,0 +1,29 @@
+name: CommandSupport
+main: maru\CommandSupport
+version: "1.0"
+author: maru
+api: [2.0.0]
+
+commands:
+ 후원:
+  usage: "/후원 <핀번호>"
+  description: "서버에 후원을 합니다."
+  permission: commandsupport.cmd.support
+ 후원목록:
+  usage: "/후원목록 <권한추가|권한제거|인덱스|확인>"
+  description: "신청된 후원 목록을 봅니다."
+  permission: commandsupport.cmd.support.list
+
+permissions:
+ commandsupport.*:
+  default: OP
+  children:
+   commandsupport.cmd.*:
+    children:
+     commandsupport.cmd.support:
+      default: true
+     commandsupport.cmd.list:
+      children:
+       commandsupport.cmd.list.addperm:
+       commandsupport.cmd.list.rmperm:
+       commandsupport.cmd.list.check:

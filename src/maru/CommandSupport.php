@@ -7,10 +7,13 @@ use pocketmine\utils\Config;
 use pocketmine\utils\TextFormat;
 use pocketmine\Player;
 use pocketmine\event\TranslationContainer;
-class CommandSupport extends PluginBase {
+use pocketmine\event\Listener;
+use pocketmine\event\player\PlayerJoinEvent;
+class CommandSupport extends PluginBase implements Listener{
 	public $supportlist, $adminlist;
 	public function onEnable() {
 		$this->loadList();
+		$this->getServer()->getPluginManager()->registerEvents($this, $this);
 	}
 	public function onDisable() {
 		$this->save(true);
@@ -150,12 +153,10 @@ class CommandSupport extends PluginBase {
 			$pin = explode(' ', $pinNumber);
 		} else {
 			if (strlen($pinNumber) !== 16 && strlen($pinNumber) !== 18) {
-				$this->getLogger()->debug("error1");
 				return false;
 			}
 			$pin = str_split($pinNumber, 4);
 			if (count($pin) < 4) {
-				$this->getLogger()->debug("error2");
 				return false;
 			}
 			if (isset($pin[5])) {
@@ -165,15 +166,19 @@ class CommandSupport extends PluginBase {
 		}
 		for ($i = 0; $i < 3; $i++) {
 			if (strlen($pin[$i]) > 4) {
-				$this->getLogger()->debug("error3");
 				return false;
 			}
 		}
 		if (strlen($pin[3]) != 4 && strlen($pin[3]) != 6) {
-			$this->getLogger()->debug("error4");
 			return false;
 		}
 		return $pin;
+	}
+	public function onJoin(PlayerJoinEvent $event) {
+		$player = $event->getPlayer();
+		if (isset($this->adminlist[strtolower($player->getName())]) && $this->supportlist !== [ ]) {
+			$player->sendMessage(TextFormat::RED."후원목록이 존재합니다. /후원목록 <인덱스> 로 확인해보세요.");
+		}
 	}
 }
 ?>

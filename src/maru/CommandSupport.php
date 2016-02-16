@@ -101,12 +101,12 @@ class CommandSupport extends PluginBase {
 						$sender->sendMessage("사용법: /후원목록 확인 <플레이어>");
 						return true;
 					}
-					if (!isset($this->supportlist[$sender->getName()])) {
-						$sender->sendMessage($sender->getName()."은 후원을 하지 않았습니다.");
+					if (!isset($this->supportlist[$args[1]])) {
+						$sender->sendMessage($args[1]."은 후원을 하지 않았습니다.");
 						return true;
 					}
-					unset($this->supportlist[$sender->getName()]);
-					$sender->sendMessage($sender->getName()."의 후원을 확인해줬습니다.");
+					unset($this->supportlist[$args[1]]);
+					$sender->sendMessage($args[1]."의 후원을 확인해줬습니다.");
 					break;
 				default :
 					if (!is_numeric($args[0])) {

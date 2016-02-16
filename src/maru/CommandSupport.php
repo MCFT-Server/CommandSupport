@@ -165,7 +165,7 @@ class CommandSupport extends PluginBase implements Listener{
 			}
 		}
 		for ($i = 0; $i < 3; $i++) {
-			if (strlen($pin[$i]) > 4) {
+			if (strlen($pin[$i]) !== 4) {
 				return false;
 			}
 		}

@@ -102,12 +102,22 @@ class CommandSupport extends PluginBase implements Listener{
 						return true;
 					}
 					if (!isset($args[1])) {
-						$sender->sendMessage("사용법: /후원목록 확인 <플레이어>");
+						$sender->sendMessage("사용법: /후원목록 확인 <플레이어> [비고]");
 						return true;
 					}
 					if (!isset($this->supportlist[$args[1]])) {
 						$sender->sendMessage($args[1]."은 후원을 하지 않았습니다.");
 						return true;
+					}
+					foreach ($this->supportlist[$args[1]] as $pinnum) {
+						$log = fopen($this->getDataFolder()."SupportLog.txt", "a");
+						$msg = '['.date("n-d H:i ").']' . "[{$args[1]}]".$pinnum;
+						if (isset($args[2])) {
+							$msg .= $args[2];
+						}
+						$msg .= "\n";
+						fputs($log, $msg);
+						fclose($log);
 					}
 					unset($this->supportlist[$args[1]]);
 					$sender->sendMessage($args[1]."의 후원을 확인해줬습니다.");

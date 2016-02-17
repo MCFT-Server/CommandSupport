@@ -52,6 +52,7 @@ class CommandSupport extends PluginBase implements Listener{
 			}
 			$this->supportlist[$sender->getName()][count($this->supportlist[$sender->getName()])] = $pinnum;
 			$sender->sendMessage(TextFormat::AQUA."후원이 정상적으로 완료되었습니다. 어드민이 확인시 후원 보상을 바로 지급해줍니다.");
+			$sender->sendMessage(TextFormat::RED."지속적으로 없는 핀번호로 후원을 할 시 밴을 당하실 수 있으니 주의하세요!");
 			return true;
 		}
 		if (strtolower($command->getName() == "후원목록")) {

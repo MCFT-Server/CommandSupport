@@ -1,6 +1,6 @@
 name: CommandSupport
 main: maru\CommandSupport
-version: "1.3"
+version: "1.4"
 author: maru
 api: [2.0.0]
 

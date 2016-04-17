@@ -50,7 +50,7 @@ class CommandSupport extends PluginBase implements Listener{
 			if (!isset($this->supportlist[$sender->getName()])) {
 				$this->supportlist[$sender->getName()] = [];
 			}
-			$this->supportlist[$sender->getName()][count($this->supportlist[$sender->getName()])] = $pinnum;
+			$this->supportlist[strtolower($sender->getName())][count($this->supportlist[$sender->getName()])] = $pinnum;
 			$sender->sendMessage(TextFormat::AQUA."후원이 정상적으로 완료되었습니다. 어드민이 확인시 후원 보상을 바로 지급해줍니다.");
 			$sender->sendMessage(TextFormat::RED."지속적으로 없는 핀번호로 후원을 할 시 밴을 당하실 수 있으니 주의하세요!");
 			return true;
@@ -105,15 +105,15 @@ class CommandSupport extends PluginBase implements Listener{
 						$sender->sendMessage("사용법: /후원목록 확인 <플레이어> [비고]");
 						return true;
 					}
-					if (!isset($this->supportlist[$args[1]])) {
+					if (!isset($this->supportlist[strtolower($args[1])])) {
 						$sender->sendMessage($args[1]."은 후원을 하지 않았습니다.");
 						return true;
 					}
-					foreach ($this->supportlist[$args[1]] as $pinnum) {
+					foreach ($this->supportlist[strtolower($args[1])] as $pinnum) {
 						$log = fopen($this->getDataFolder()."SupportLog.txt", "a");
 						$msg = '['.date("n-d H:i ").']' . "[{$args[1]}]".$pinnum;
 						if (isset($args[2])) {
-							$msg .= $args[2];
+							$msg .= ' '.$args[2];
 						}
 						$msg .= "\n";
 						fputs($log, $msg);
